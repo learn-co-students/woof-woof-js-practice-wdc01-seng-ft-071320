@@ -61,16 +61,11 @@ document.addEventListener("DOMContentLoaded", ()=> {
             let h2 = document.createElement("h2")
             h2.innerText = `${pupInfo.name}`
             let btn = document.createElement("button")
-            if (pupInfo.isGoodDog) {
-                btn.innerText = "Good Dog!"
-            } else {
-                btn.innerText = "Bad Dog!"
-            }
+            (pupInfo.isGoodDog) ? btn.innerText = "Good Dog!" : btn.innerText="Bad Dog!"
             dogInfo.append(img, h2, btn)
         
         
             btn.addEventListener("click", () => {
-                dogInfo.append(img, h2, btn)
                 config = {
                     method: "PATCH",
                     headers: {
