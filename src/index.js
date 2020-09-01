@@ -9,15 +9,33 @@ function getAllDogs() {
     .then(dogs => dogs.forEach((dog => displayDog(dog))))
 }
 
-// if (filterBtn.innerText === "Filter good dogs: OFF"){displayDog(dog)}
-// else if (filterBtn.innerText === "Filter good dogs: ON" && dog.isGoodDog == true){displayDog(dog)}
+const filterBtn = document.querySelector('#good-dog-filter')
+filterBtn.innerText = "Filter good dogs: OFF"
+
+filterBtn.addEventListener('click', () => {
+
+    if (filterBtn.innerText === "Filter good dogs: OFF"){
+        filterBtn.innerText = "Filter good dogs: ON" 
+        dogBarDiv.innerHTML = ""           //sort ON show only good dogs
+        fetch(url)
+        .then(resp => resp.json())
+        .then(dogs => dogs.forEach((dog => {
+            if (dog.isGoodDog === true){
+            displayDog(dog)}
+        })) )
+        }
+    else {
+        filterBtn.innerText = "Filter good dogs: OFF"
+        dogBarDiv.innerHTML = ""
+        getAllDogs()
+        }
+})
+
 
 function displayDog(dog){
-    
         const span = document.createElement('span')
         span.innerText = dog.name
         dogBarDiv.append(span)
-    
 
     span.addEventListener('click', () => {
         dogInfoDiv.innerText = ""
@@ -43,19 +61,5 @@ function displayDog(dog){
     })
 }
 
-const filterBtn = document.querySelector('#good-dog-filter')
 
-filterBtn.addEventListener('click', () => {
-   
-    if (filterBtn.innerText === "Filter good dogs: OFF"){
-        filterBtn.innerText = "Filter good dogs: ON"
-    }
-
-
-    else {
-        filterBtn.innerText = "Filter good dogs: OFF"
-    }
-
-    
-})
 
