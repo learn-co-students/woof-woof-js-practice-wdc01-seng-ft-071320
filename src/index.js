@@ -52,8 +52,9 @@ document.addEventListener("DOMContentLoaded", ()=> {
             dogInfo.innerHTML = "";
             fetch(url+`${pup.id}`)
             .then(res => res.json())
-            .then(pupInfo => {postPupInfo(pupInfo)})
+            .then(pupInfo => postPupInfo(pupInfo))
         })
+    }
         
         function postPupInfo(pupInfo) {
             let img = document.createElement("img")
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             let h2 = document.createElement("h2")
             h2.innerText = `${pupInfo.name}`
             let btn = document.createElement("button")
-            (pupInfo.isGoodDog) ? btn.innerText = "Good Dog!" : btn.innerText="Bad Dog!"
+            pupInfo.isGoodDog ? btn.innerText = "Good Dog!" : btn.innerText="Bad Dog!"
             dogInfo.append(img, h2, btn)
         
         
@@ -73,20 +74,25 @@ document.addEventListener("DOMContentLoaded", ()=> {
                         "Accept": "application/json"
                     },
                     body: JSON.stringify({
-                        isGoodDog: !pup.isGoodDog
+                        isGoodDog: !pupInfo.isGoodDog
                     })
                 }
-                fetch(url+`${pup.id}`, config)
+                fetch(url+`${pupInfo.id}`, config)
                 .then(res => res.json())
                 .then(updatedPup => {
-                    pup = updatedPup
-                    if (pup.isGoodDog) {
+                    pupInfo = updatedPup
+                    if (pupInfo.isGoodDog) {
                         btn.innerText = "Good Dog!"
+                        dogBar.innerHTML = ""
+                        fetchButtons()
                     } else {
                         btn.innerText = "Bad Dog!"
+                        dogBar.innerHTML =""
+                        fetchButtons()
                     };
                 })
+                
             })
-        }
+        
     }   
 })
